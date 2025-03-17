@@ -35,6 +35,15 @@ class Dino(pygame.sprite.Sprite):
         self.animation_frame = 0
         self.animation_length = 0 if isinstance(self.animations[value], pygame.Surface) else len(self.animations[value])
 
+    @property
+    def image(self):
+        return self._image
+
+    @image.setter
+    def image(self, value):
+        self._image = value
+        self.mask = pygame.mask.from_surface(self.image)
+        
 
     def jump(self):
         if self.state == DinoStates.RUNNING:
@@ -65,6 +74,4 @@ class Dino(pygame.sprite.Sprite):
         else:
             self.image = self.animations[self.state]
 
-    def draw(self, screen):
-        screen.blit(self.image, self.rect)
 

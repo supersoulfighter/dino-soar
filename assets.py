@@ -2,20 +2,9 @@ import pygame
 from typing import Tuple
 from pathlib import Path
 
-assets = {}  # Single dictionary for all assets
+# Single dictionary for all assets
+assets = {}
 
-# # Initialize pygame if not already initialized
-# if not pygame.get_init():
-#     pygame.init()
-
-# # Set up display if not already set
-# if not pygame.display.get_init():
-#     _ = pygame.display.set_mode((1, 1), pygame.NOFRAME)
-
-# # Initialize pygame mixer for sounds
-# if not pygame.mixer.get_init():
-#     pygame.mixer.init()
-        
 
 def load_assets(asset_dir):
     for directory in Path(asset_dir).rglob("*"):

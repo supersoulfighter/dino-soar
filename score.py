@@ -12,13 +12,10 @@ class Score(pygame.sprite.Sprite):
         self.font = font
         self.score = 0
         self.image = None
+        self.rect = None
+        self.update()
 
     def update(self):
         self.score += self.clock.get_time() * self.pointsPerMillisecond
         self.image = self.font.render(f"{floor(self.score):05d}", False, self.color)
-        # self.image = pygame.Surface(text.get_size(), pygame.SRCALPHA)
-        # self.image.fill((0,0,0,0))  # Transparent background
-        # self.image.blit(text, (0, 0))
-
-    def draw(self, screen):
-        screen.blit(self.image, (self.x, self.y))
+        self.rect = self.image.get_rect(topleft=(self.x, self.y))

@@ -4,22 +4,23 @@ from dino import *
 from ground import *
 from score import *
 from message_on_screen import *
-from obstacle_group import ObstacleGroup
+from obstacles import *
 from config import *
+from screen import Screen
 
-
-
-# Setup pygame, display and assets
+# Setup
 pygame.init()
-screen = pygame.display.set_mode((GAME_WIDTH, GAME_HEIGHT))
-pygame.display.set_caption("Dino Jump")
 clock = pygame.time.Clock()
+screen = Screen(GAME_WIDTH, GAME_HEIGHT, "Dino Soar")
 load_assets("./assets")
 
 
 def reset_game():
     global dino, ground, obstacles, game_over, score, message_onscreen, game_active, scrolling_speed
+    screen.empty()
     scrolling_speed = 5
+
+    # Create game objects
     dino = Dino(
         animations={
                 DinoStates.RUNNING: assets["images/dino/run"],
@@ -35,64 +36,61 @@ def reset_game():
         gravity=.4
     )
     ground = Ground(GROUND_Y, scrolling_speed, assets["images/ground"])
-    obstacles = ObstacleGroup(GAME_WIDTH,GROUND_Y, scrolling_speed)
+    obstacles = Obstacles(GAME_WIDTH, GROUND_Y, scrolling_speed, dino)
     font = pygame.font.Font(assets["fonts/PressStart2P/regular"], 13)
     score = Score(GAME_WIDTH - 80, 10, COLOR_FOREGROUND, clock, 0.01, font)
     message_onscreen = MessageOnScreen(GAME_WIDTH//2, GAME_HEIGHT//2 - 25, 3, COLOR_FOREGROUND, font)
+    
+    # Add sprites to screen with layers
+    screen.add(ground, layer=SCREEN_LAYERS.GROUND.value)
+    screen.add(obstacles, layer=SCREEN_LAYERS.OBSTACLES.value)
+    screen.add(dino, layer=SCREEN_LAYERS.DINO.value)
+    screen.add(score, layer=SCREEN_LAYERS.UI.value)
+    screen.add(message_onscreen, layer=SCREEN_LAYERS.UI.value)
+    
     game_over = False
     game_active = True
 
 
 def handle_events():
     for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            global game_active
-            game_active = False
+        match event.type:
+            case pygame.QUIT:
+                global game_active
+                game_active = False
 
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_SPACE and not game_over:
-                dino.jump()
-            if event.key == pygame.K_r and game_over:
-                reset_game()
+            case pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE and not game_over:
+                    dino.jump()
+                if event.key == pygame.K_r and game_over:
+                    reset_game()
+       
+            case GAME_EVENT_TYPES.CRASH.value:
+                end_game()
+
+            case GAME_EVENT_TYPES.SPAWNED.value:
+                screen.add(event.object, layer=event.layer)
 
 
-def update_game_objects():
-    dino.update()
-    ground.update()
-    obstacles.update()
-    score.update()
+def end_game():
+    global game_over
+    game_over = True
+    assets["sounds/dino/crash"].play()
+    message_onscreen.message = "G A M E  O V E R\nPress R to restart"
     message_onscreen.update()
-
-
-def check_collisions():
-    if obstacles.check_collision(dino):
-        global game_over
-        game_over = True
-        assets["sounds/dino/crash"].play()
-        message_onscreen.message = "G A M E  O V E R\nPress R to restart"
-        message_onscreen.update()
-        dino.state = DinoStates.CRASHED
-        dino.update()
-
-def render():
-    screen.fill(COLOR_BACKGROUND)
-    ground.draw(screen)
-    dino.draw(screen)
-    obstacles.draw(screen)
-    score.draw(screen)
-    message_onscreen.draw(screen)
-    pygame.display.flip()
+    dino.state = DinoStates.CRASHED
+    dino.update()
 
 
 
 # Game loop
 reset_game()
+
 while game_active:
     handle_events()
     if not game_over:
-        update_game_objects()
-        check_collisions()
-    render()
+        screen.update()
+    screen.render()
     clock.tick(FPS)
 
 pygame.quit()

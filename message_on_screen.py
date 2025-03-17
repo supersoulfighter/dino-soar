@@ -8,11 +8,25 @@ class MessageOnScreen(pygame.sprite.Sprite):
         self.lineHeight = lineHeight
         self.color = color
         self.font = font
+        self._message = None
         self.message = ""
-        self.image = None
 
-    def update(self):
-        lines = self.message.split('\n')
+    @property
+    def message(self):
+        return self._message
+
+    @message.setter
+    def message(self, value):
+        if value == self._message:
+            return
+        if not value:
+            self.image = pygame.Surface((0, 0))
+            self.rect = pygame.Rect(0, 0, 0, 0)
+            return
+
+        self._message = value
+
+        lines = value.split('\n')
         images = []
         for line in lines:
             image = self.font.render(line, False, self.color)
@@ -25,8 +39,4 @@ class MessageOnScreen(pygame.sprite.Sprite):
         for image in images:
             self.image.blit(image, (0, y))
             y += image.get_height() + self.lineHeight
-
-    def draw(self, screen):
-        rect = self.image.get_rect()
-        rect.center = (screen.get_width() // 2, screen.get_height() // 2)
-        screen.blit(self.image, rect)
+        self.rect = self.image.get_rect(center=(self.x, self.y))
