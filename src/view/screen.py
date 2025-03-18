@@ -1,21 +1,24 @@
 from typing import override
-from config import *
-from pygame import display
+import pygame
+
 
 
 class Screen(pygame.sprite.LayeredUpdates):
-    def __init__(self, width, height, caption):
+    def __init__(self, width, height, caption, color_bg):
         super().__init__()
-        self.image = display.set_mode((width, height))
-        display.set_caption(caption)
+        self.image = pygame.display.set_mode((width, height))
+        pygame.display.set_caption(caption)
         self.rect = self.image.get_rect()
         self.groups = []
+        self.color_bg = color_bg
+
 
     @override
     def add(self, *sprites, **kwargs):
         if len(sprites) > 0 and isinstance(sprites[0], pygame.sprite.Group):
             self.groups.append(sprites[0])
         super().add(*sprites, **kwargs)
+
 
     @override
     def remove(self, *sprites):
@@ -25,10 +28,12 @@ class Screen(pygame.sprite.LayeredUpdates):
                     self.groups.remove(sprites[0])
             super().remove(*sprites)
 
+
     @override
     def empty(self):
         self.groups.clear()
         super().empty()
+
 
     @override
     def update(self, *args, **kwargs) -> None:
@@ -36,7 +41,8 @@ class Screen(pygame.sprite.LayeredUpdates):
             group.update(*args, **kwargs)
         return super().update(*args, **kwargs)
 
+
     def render(self):
-        self.image.fill(COLOR_BACKGROUND)
+        self.image.fill(self.color_bg)
         super().draw(self.image)
-        display.flip()
+        pygame.display.flip()

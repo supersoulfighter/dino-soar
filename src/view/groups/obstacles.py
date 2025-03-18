@@ -1,18 +1,17 @@
 import random
 import pygame
-from config import *
-from cactus import Cactus
-from assets import assets
+from model.config import *
+from view.sprites.scrolling import SpriteScrolling
+from model.assets import *
+
 
 
 class Obstacles(pygame.sprite.Group):
-    def __init__(self, x, y, speed, player):
+    def __init__(self, x, y, player):
         super().__init__()
         self.x = x
         self.y = y
-        self.speed = speed
         self.spawn_timer = 0
-        self.score = 0
         self.player = player
     
 
@@ -25,7 +24,13 @@ class Obstacles(pygame.sprite.Group):
         self.spawn_timer += 1
         if self.spawn_timer > 50 and random.random() < 0.03:
             self.spawn_timer = 0
-            o = Cactus(assets['images/cacti'], x=self.x, y=self.y, speed=self.speed)
+            o = SpriteScrolling(
+                images=assets['images/cacti'],
+                x=self.x,
+                y=self.y,
+                speed_multiplier=1.0,
+                useMask=True
+            )
             self.add(o)
             pygame.event.post(
                 pygame.event.Event(GAME_EVENT_TYPES.SPAWNED.value,

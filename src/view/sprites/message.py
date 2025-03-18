@@ -1,6 +1,6 @@
 import pygame
 
-class MessageOnScreen(pygame.sprite.Sprite):
+class MessageView(pygame.sprite.Sprite):
     def __init__(self, x, y, lineHeight, color, font=None):
         super().__init__()
         self.x = x
