@@ -18,9 +18,17 @@ class Screen(pygame.sprite.LayeredUpdates):
         super().add(*sprites, **kwargs)
 
     @override
-    def empty(self, *args, **kwargs):
+    def remove(self, *sprites):
+        if len(sprites) > 0:
+            if isinstance(sprites[0], pygame.sprite.Group):
+                if sprites[0] in self.groups:
+                    self.groups.remove(sprites[0])
+            super().remove(*sprites)
+
+    @override
+    def empty(self):
         self.groups.clear()
-        super().empty(*args, **kwargs)
+        super().empty()
 
     @override
     def update(self, *args, **kwargs) -> None:

@@ -22,6 +22,7 @@ class MessageOnScreen(pygame.sprite.Sprite):
         if not value:
             self.image = pygame.Surface((0, 0))
             self.rect = pygame.Rect(0, 0, 0, 0)
+            self._message = value
             return
 
         self._message = value
