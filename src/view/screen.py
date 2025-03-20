@@ -4,6 +4,22 @@ import pygame
 
 
 class Screen(pygame.sprite.LayeredUpdates):
+    """
+    Screen
+    ======
+    *This class creates and manages the game window and handles all rendering.
+    By subclassing ``pygame.Group`` and adding all game objects
+    (``Sprites`` and ``Groups``), we can update and render all game objects
+    in one place.*
+
+    Parameters
+    ----------
+        width: Width of the window
+        height: Height of the window
+        caption: Caption of the window
+        color_bg: Background color
+    """
+
     def __init__(self, width, height, caption, color_bg):
         super().__init__()
         self.image = pygame.display.set_mode((width, height))

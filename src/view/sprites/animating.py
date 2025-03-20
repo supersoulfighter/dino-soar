@@ -5,6 +5,23 @@ from view.sprites.base import SpriteBase
 
 
 class SpriteAnimating(SpriteBase):
+    """
+    *A sprite that can do multiple animations.*
+
+    Each animation is activated by setting the `state` property.
+     
+    Parameters
+    ----------
+        ``images`` (dict): A dictionary whose keys are the states
+        and values are a Sequence of images. Or supply a single ``Surface``.
+        ``animation_speed`` (float): The speed of the animation.
+        ``state_start`` (str): The initial state of the sprite.
+        ``x`` (int): The x-coordinate of the sprite.
+        ``y`` (int): The y-coordinate of the sprite.
+        ``useMask`` (bool, optional): Whether to create a collision mask for the sprite.
+        Defaults to False.
+        ``*groups`` (pygame.sprite.Group, optional): The groups to add the sprite to.
+    """
     def __init__(self, images, animation_speed, state_start, x, y, useMask=False, *groups, **kwargs):
         self.useMask = useMask
         self.animations = images
@@ -44,3 +61,4 @@ class SpriteAnimating(SpriteBase):
             self.image = self.animations[self.state][self.animation_frame]
         else:
             self.image = self.animations[self.state]
+        # All animation frames should have the same size, so rect not updated

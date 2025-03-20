@@ -1,4 +1,8 @@
-# Game Configuration
+"""
+Game Configuration
+==================
+*Constants that configure the game*
+"""
 from enum import Enum, auto
 import pygame
 
@@ -6,11 +10,12 @@ import pygame
 
 #Game constants first because some are used by other constants
 GAME_FPS = 60
+GAME_WIDTH = 600
 GAME_HEIGHT = 150
 GAME_NAME = "Dino Soar"
-GAME_SPEED_INCREMENT = 1
+GAME_SPEED_INCREMENT = .001
+GAME_SPEED_MAX = 1000
 GAME_SPEED_START = 5
-GAME_WIDTH = 600
 GAME_GROUND_Y = GAME_HEIGHT - 15
 
 CLOUD_MAX_Y = GAME_HEIGHT - 30

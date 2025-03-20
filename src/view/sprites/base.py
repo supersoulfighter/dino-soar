@@ -5,6 +5,21 @@ import random
 
 
 class SpriteBase(pygame.sprite.Sprite):
+    """
+    *Base sprite class.*
+    
+    The image and rect attributes enable any ``pygame.sprite.Group`` to draw the sprite.
+
+    Parameters
+    ----------
+        ``images`` (Sequence or pygame.Surface): A ``Sequence`` of images or a single image.
+        If a ``Sequence`` is provided, a random image will be selected.
+        ``x`` (int): The x-coordinate of the sprite.
+        ``y`` (int): The y-coordinate of the sprite.
+        ``useMask`` (bool, optional): Whether to create a collision mask for the sprite.
+        Defaults to False.
+        ``*groups`` (pygame.sprite.Group, optional): The ``Groups`` to add the sprite to.
+    """
     def __init__(self, images, x, y, useMask=False, *groups, **kwargs):
         super().__init__(*groups)
         self.useMask = useMask
@@ -26,5 +41,4 @@ class SpriteBase(pygame.sprite.Sprite):
         self._image = value
         if self.useMask:
             self.mask = pygame.mask.from_surface(self.image)
-        # All animation frames should have the same size, so rect not updated
- 
+        # All images should have the same size, so rect not updated

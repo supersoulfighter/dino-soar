@@ -1,3 +1,11 @@
+"""
+Dino Soar
+=========
+*A partial clone of the Chrome no-network, dinosaur runner game.*
+
+Author: Jeff Ettenhofer
+"""
+
 import pygame
 from model.config import *
 from model.assets import *
@@ -12,10 +20,8 @@ from view.screen import *
 
 # Setup
 pygame.init()
-clock = pygame.time.Clock()
 screen = Screen(GAME_WIDTH, GAME_HEIGHT, GAME_NAME, COLOR_BACKGROUND)
-load_assets("./assets")
-
+load_assets("../assets")
 
 # Create game objects
 dino = Dino(
@@ -93,9 +99,8 @@ reset_game()
 while model.game.game_state != GAME_STATES.QUIT:
    handle_events()
    if model.game.game_state == GAME_STATES.PLAYING:
-       model.game.game_score += clock.get_time() * SCORE_POINTS_PER_MILLISECOND
+       model.game.update()
        screen.update()
    screen.render()
-   clock.tick(GAME_FPS)
 
 pygame.quit()

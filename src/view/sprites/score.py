@@ -5,6 +5,17 @@ import model.game
 
 
 class ScoreView(pygame.sprite.Sprite):
+    """
+    *A sprite that displays the current score.*
+
+    Parameters
+    ----------
+        ``x`` (int): The x-coordinate of the sprite.
+        ``y`` (int): The y-coordinate of the sprite.
+        ``color`` (tuple): The color of the sprite.
+        ``font`` (pygame.Font, optional): The font to use for the sprite.
+        Defaults to None.
+    """
     def __init__(self, x, y, color, font=None):
         super().__init__()
         self.x = x

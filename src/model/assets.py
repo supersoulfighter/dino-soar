@@ -1,3 +1,18 @@
+"""
+Asset loader
+============
+
+*This module makes working with assets (images, sounds, fonts) easier.*
+
+The ``load_assets()`` function takes a root asset directory and recursively
+loads assets in subfolders. Images are converted to ``pygame.Surfaces``. Sounds
+to ``pygame.Sounds``. Fonts are left as Path references, because a ``pygame.Font``
+must be created for each font size, so this module won't know what
+sizes are needed ahead of time. If multiple assets are found in a folder, they are
+converted to a tuple, which makes it easier to have a set of animation frames, for example.
+All assets are loaded into a single dictionary, which is accessible via the ``assets``
+global variable. The keys are the paths to the assets, e.g., "images/dino/run".
+"""
 import pygame
 from typing import Tuple
 from pathlib import Path
@@ -7,7 +22,12 @@ assets = {}
 
 
 def load_assets(asset_dir):
-    for directory in Path(asset_dir).rglob("*"):
+    """
+
+    :param asset_dir:
+    """
+    a = Path(asset_dir).rglob("*")
+    for directory in a:
         if not directory.is_dir():
             continue
             

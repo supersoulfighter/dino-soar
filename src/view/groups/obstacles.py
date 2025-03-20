@@ -7,6 +7,9 @@ from model.assets import *
 
 
 class Obstacles(pygame.sprite.Group):
+    """
+    Spawns objects that the dino must avoid.
+    """
     def __init__(self, x, y, player):
         super().__init__()
         self.x = x

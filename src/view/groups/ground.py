@@ -2,6 +2,9 @@ import pygame
 from model.game import game_speed
 
 class Ground(pygame.sprite.Group):
+    """
+    The ground or horizon line that the dino runs on.
+    """
     def __init__(self, y, image):
         super().__init__()
         self.A = pygame.sprite.Sprite(self)

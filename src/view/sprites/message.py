@@ -1,6 +1,22 @@
 import pygame
 
 class MessageView(pygame.sprite.Sprite):
+    """
+    *A sprite that displays a message.*
+
+    Use the ``message`` property to set the message. 
+    Automatically splits a multiline message into multiple images because 
+    ``pygame.font.Font`` does not support multiline strings.
+
+    Parameters
+    ----------
+        ``x`` (int): The x-coordinate of the sprite.
+        ``y`` (int): The y-coordinate of the sprite.
+        ``lineHeight`` (int): The line height of the sprite.
+        ``color`` (tuple): The color of the sprite.
+        ``font`` (pygame.Font, optional): The font to use for the sprite.
+        Defaults to None.
+    """
     def __init__(self, x, y, lineHeight, color, font=None):
         super().__init__()
         self.x = x
