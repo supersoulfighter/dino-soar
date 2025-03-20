@@ -42,7 +42,7 @@ dino = Dino(
 )
 ground = Ground(GAME_GROUND_Y, assets["images/ground"])
 clouds = Clouds(CLOUD_SPEED_MULTIPLIER, CLOUD_SPAWN_CHANCE, CLOUD_MIN_Y, CLOUD_MAX_Y)
-obstacles = Obstacles(GAME_WIDTH, GAME_GROUND_Y, dino)
+obstacles = Obstacles(dino)
 font = pygame.font.Font(assets["fonts/PressStart2P/regular"], FONT_SIZE)
 score_view = ScoreView(SCORE_X, SCORE_Y, COLOR_FOREGROUND, font)
 message_view = MessageView(MESSAGE_X, MESSAGE_Y, MESSAGE_LINE_SPACING, COLOR_FOREGROUND, font)
