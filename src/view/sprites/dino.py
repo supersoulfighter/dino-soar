@@ -10,6 +10,7 @@ from view.sprites.animating import SpriteAnimating
 class DinoStates(Enum):
     RUNNING = auto()
     JUMPING = auto()
+    DUCKING = auto()
     CRASHED = auto()
 
 
@@ -45,6 +46,12 @@ class Dino(SpriteAnimating):
             self.velocity = self.jump_speed
             self.state = DinoStates.JUMPING
             assets["sounds/dino/jump"].play()
+
+    def duck(self, duck):
+        if duck and self.state == DinoStates.RUNNING:
+            self.state = DinoStates.DUCKING
+        elif not duck and self.state == DinoStates.DUCKING:
+            self.state = DinoStates.RUNNING
 
     @override
     def update(self):

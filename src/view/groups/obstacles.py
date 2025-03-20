@@ -14,8 +14,8 @@ class Obstacles(pygame.sprite.Group):
         super().__init__()
         self.x = x
         self.y = y
-        self.spawn_timer = 0
         self.player = player
+        self.spawn_cacti_timer = 0
     
 
     def update(self, *args, **kwargs):
@@ -24,22 +24,31 @@ class Obstacles(pygame.sprite.Group):
     
 
     def spawn(self):
-        self.spawn_timer += 1
-        if self.spawn_timer > 50 and random.random() < 0.03:
-            self.spawn_timer = 0
-            o = SpriteScrolling(
-                images=assets['images/cacti'],
-                x=self.x,
-                y=self.y,
-                speed_multiplier=1.0,
-                useMask=True
-            )
-            self.add(o)
-            pygame.event.post(
-                pygame.event.Event(GAME_EVENT_TYPES.SPAWNED.value,
-                object=o,
-                layer=SCREEN_LAYERS.OBSTACLES.value)
-            )
+        self.spawn_cacti_timer += 1
+        if self.spawn_cacti_timer > CACTI_SPAWN_RATE and random.random() < CACTI_SPAWN_VARIANCE:
+            self.spawn_cacti_timer = 0  
+            count = random.randint(1, CACTI_CLUSTER_MAX)
+            x = self.x
+            w = 0
+            for _ in range(count):  
+                spacing = random.randint(CACTI_SPACING_MIN, CACTI_SPACING_MAX)
+                o = SpriteScrolling(
+                    images=assets['images/cacti'],
+                    x=x,
+                    y=self.y,
+                    speed_multiplier=1.0,
+                    useMask=True
+                )
+                w += o.rect.width + spacing
+                if w > CACTI_WIDTH_MAX:
+                    break
+                self.add(o)
+                pygame.event.post(
+                    pygame.event.Event(GAME_EVENT_TYPES.SPAWNED.value,
+                    object=o,
+                    layer=SCREEN_LAYERS.OBSTACLES.value)
+                )
+                x = o.rect.right + spacing
 
 
     def check_collision(self):
