@@ -1,5 +1,5 @@
 from view.sprites.base import SpriteBase
-from model.game import game_speed
+import model.game
 
 
 
@@ -27,6 +27,6 @@ class SpriteScrolling(SpriteBase):
  
 
     def move(self):
-        self.rect.x -= game_speed * self.speed_multiplier
+        self.rect.x -= model.game.game_speed * self.speed_multiplier
         if self.rect.right < 0:
             self.kill()  # Remove from all groups

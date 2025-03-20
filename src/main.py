@@ -8,7 +8,7 @@ Author: Jeff Ettenhofer
 
 import pygame
 from model.config import *
-from model.assets import *
+import model.assets
 import model.game
 from view.sprites.dino import *
 from view.sprites.score import *
@@ -21,15 +21,15 @@ from view.screen import *
 # Setup
 pygame.init()
 screen = Screen(GAME_WIDTH, GAME_HEIGHT, GAME_NAME, COLOR_BACKGROUND)
-load_assets("./assets")
+model.assets.load_assets("./assets")
 
 # Create game objects
 dino = Dino(
     animations={
-            DinoStates.RUNNING: assets["images/dino/run"],
-            DinoStates.JUMPING: assets["images/dino/idle"],
-            DinoStates.DUCKING: assets["images/dino/duck"],
-            DinoStates.CRASHED: assets["images/dino/crash"]
+            DinoStates.RUNNING: model.assets.assets["images/dino/run"],
+            DinoStates.JUMPING: model.assets.assets["images/dino/idle"],
+            DinoStates.DUCKING: model.assets.assets["images/dino/duck"],
+            DinoStates.CRASHED: model.assets.assets["images/dino/crash"]
         },
     animation_speed=DINO_ANIMATION_SPEED,
     state_start=DinoStates.RUNNING,
@@ -40,10 +40,10 @@ dino = Dino(
     jump_speed=DINO_JUMP_SPEED,
     gravity=DINO_GRAVITY
 )
-ground = Ground(GAME_GROUND_Y, assets["images/ground"])
+ground = Ground(GAME_GROUND_Y, model.assets.assets["images/ground"])
 clouds = Clouds(CLOUD_SPEED_MULTIPLIER, CLOUD_SPAWN_CHANCE, CLOUD_MIN_Y, CLOUD_MAX_Y)
 obstacles = Obstacles(dino)
-font = pygame.font.Font(assets["fonts/PressStart2P/regular"], FONT_SIZE)
+font = pygame.font.Font(model.assets.assets["fonts/PressStart2P/regular"], FONT_SIZE)
 score_view = ScoreView(SCORE_X, SCORE_Y, COLOR_FOREGROUND, font)
 message_view = MessageView(MESSAGE_X, MESSAGE_Y, MESSAGE_LINE_SPACING, COLOR_FOREGROUND, font)
 
@@ -99,7 +99,7 @@ def handle_events():
 
 def crashed():
     model.game.game_state = GAME_STATES.CRASHED
-    assets["sounds/dino/crash"].play()
+    model.assets.assets["sounds/dino/crash"].play()
     message_view.message = "G A M E  O V E R\nPress R to restart"
     dino.state = DinoStates.CRASHED
     dino.update()

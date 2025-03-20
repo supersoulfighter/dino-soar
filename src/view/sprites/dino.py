@@ -1,8 +1,6 @@
-import pygame
 from enum import Enum, auto
 from typing import override
-from model.assets import *
-from view.sprites.scrolling import SpriteScrolling
+import model.assets
 from view.sprites.animating import SpriteAnimating
 
 
@@ -45,7 +43,7 @@ class Dino(SpriteAnimating):
         if self.state == DinoStates.RUNNING:
             self.velocity = self.jump_speed
             self.state = DinoStates.JUMPING
-            assets["sounds/dino/jump"].play()
+            model.assets.assets["sounds/dino/jump"].play()
 
     def duck(self, duck):
         if duck and self.state == DinoStates.RUNNING:

@@ -1,7 +1,6 @@
-import pygame
 from enum import Enum, auto
 from typing import override
-from model.assets import *
+import model.assets
 from view.sprites.scrolling import SpriteScrolling
 from view.sprites.animating import SpriteAnimating
 from model.config import *
@@ -19,7 +18,7 @@ class Pterodactyl(SpriteAnimating, SpriteScrolling):
     """
     def __init__(self, x, y):
         super().__init__(
-            images={PterodactylStates.FLYING: assets['images/pterodactyl']},
+            images={PterodactylStates.FLYING: model.assets.assets['images/pterodactyl']},
             animation_speed=PTERODACTYL_ANIMATION_SPEED,
             state_start=PterodactylStates.FLYING,
             x=x,

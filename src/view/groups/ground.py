@@ -1,5 +1,5 @@
 import pygame
-from model.game import game_speed
+import model.game
 
 class Ground(pygame.sprite.Group):
     """
@@ -20,8 +20,8 @@ class Ground(pygame.sprite.Group):
 
     def update(self, *args, **kwargs):
         # Move both ground pieces to the left
-        self.A.rect.x -= game_speed
-        self.B.rect.x -= game_speed
+        self.A.rect.x -= model.game.game_speed
+        self.B.rect.x -= model.game.game_speed
 
         # Reset positions when ground moves off screen
         if self.A.rect.right <= 0:

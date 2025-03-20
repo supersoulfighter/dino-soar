@@ -2,7 +2,7 @@ import random
 import pygame
 from model.config import *
 from view.sprites.scrolling import SpriteScrolling
-from model.assets import assets
+import model.assets
 
 
 class Clouds(pygame.sprite.Group):
@@ -24,7 +24,7 @@ class Clouds(pygame.sprite.Group):
     def spawn(self):
         if random.random() < self.spawn_chance:
             cloud = SpriteScrolling(
-                images=assets['images/cloud'],
+                images=model.assets.assets['images/cloud'],
                 x=GAME_WIDTH,
                 y=random.randint(self.min_y, self.max_y),
                 speed_multiplier=self.speed_multiplier,

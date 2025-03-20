@@ -22,10 +22,6 @@ assets = {}
 
 
 def load_assets(asset_dir):
-    """
-
-    :param asset_dir:
-    """
     a = Path(asset_dir).rglob("*")
     for directory in a:
         if not directory.is_dir():

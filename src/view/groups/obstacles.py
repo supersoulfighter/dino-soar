@@ -1,10 +1,12 @@
 import random
+
 import pygame
+
+import model.assets
 from model.config import *
-from view.sprites.scrolling import SpriteScrolling
-from model.assets import *
-from view.sprites.pterodactyl import Pterodactyl
 import model.game
+from view.sprites.pterodactyl import Pterodactyl
+from view.sprites.scrolling import SpriteScrolling
 
 
 class Obstacles(pygame.sprite.Group):
@@ -41,7 +43,7 @@ class Obstacles(pygame.sprite.Group):
             for _ in range(count):  
                 spacing = random.randint(CACTI_SPACING_MIN, CACTI_SPACING_MAX)
                 o = SpriteScrolling(
-                    images=assets['images/cacti'],
+                    images=model.assets.assets['images/cacti'],
                     x=x,
                     y=GAME_GROUND_Y,
                     speed_multiplier=1.0,

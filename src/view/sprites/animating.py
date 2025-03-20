@@ -1,5 +1,4 @@
 import pygame
-from model.assets import assets
 from view.sprites.base import SpriteBase
 
 

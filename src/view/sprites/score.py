@@ -1,6 +1,6 @@
 from math import floor
 import pygame
-from model.assets import *
+import model.assets
 import model.game
 
 
@@ -30,4 +30,4 @@ class ScoreView(pygame.sprite.Sprite):
         self.image = self.font.render(f"{floor(model.game.game_score):05d}", False, self.color)
         self.rect = self.image.get_rect(topleft=(self.x, self.y))
         if floor(model.game.game_score) % 100 == 0 and floor(model.game.game_score) > 0:
-            assets["sounds/score"].play()
+            model.assets.assets["sounds/score"].play()
