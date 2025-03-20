@@ -12,7 +12,9 @@ class PterodactylStates(Enum):
 
 class Pterodactyl(SpriteAnimating, SpriteScrolling):
     """
-    A sprite that represents a pterodactyl obstacle in the game.
+    Pterodactyl
+    ===========
+    *A sprite that represents a pterodactyl obstacle in the game.*
     
     Combines animation and scrolling behavior.
     """

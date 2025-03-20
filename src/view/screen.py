@@ -7,10 +7,9 @@ class Screen(pygame.sprite.LayeredUpdates):
     """
     Screen
     ======
-    *This class creates and manages the game window and handles all rendering.
-    By subclassing ``pygame.Group`` and adding all game objects
-    (``Sprites`` and ``Groups``), we can update and render all game objects
-    in one place.*
+    *This class creates and manages the game window and handles all rendering.*
+
+    By subclassing ``pygame.Group`` and adding all game objects (``Sprites`` and ``Groups``), we can update and render all game objects in one place.
 
     Parameters
     ----------

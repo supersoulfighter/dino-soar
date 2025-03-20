@@ -11,7 +11,9 @@ from view.sprites.scrolling import SpriteScrolling
 
 class Obstacles(pygame.sprite.Group):
     """
-    Spawns objects that the dino must avoid.
+    Obstacles
+    =========
+    *Spawns objects that the player must avoid.*
     """
     def __init__(self, player):
         super().__init__()

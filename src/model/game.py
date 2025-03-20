@@ -3,6 +3,8 @@ Game
 ====
 *Stores the game state:*
 
+Make sure to use import ``model.game`` so that the specific global variables in this module are used, not copies.
+
 * ``game_score``: The current score
 * ``game_speed``: The current game speed
 * ``game_state``: The current game state

@@ -3,7 +3,9 @@ import model.game
 
 class Ground(pygame.sprite.Group):
     """
-    The ground or horizon line that the dino runs on.
+    Ground
+    ======
+    *The scrolling ground that the player runs on.*
     """
     def __init__(self, y, image):
         super().__init__()

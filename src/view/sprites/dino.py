@@ -15,19 +15,19 @@ class DinoStates(Enum):
 
 class Dino(SpriteAnimating):
     """
-    *A sprite that represents the dinosaur in the game.*
+    Dino
+    ====
+    *A sprite that represents the player in the game.*
 
     Parameters
     ----------
-        ``animations`` (dict): A dictionary whose keys are the states
-        and values are a Sequence of images. Or supply a single ``Surface``.
+        ``animations`` (dict): A dictionary whose keys are the states and values are a ``Sequence`` of images. Or supply a single ``Surface``.
         ``animation_speed`` (float): The speed of the animation.
         ``state_start`` (str): The initial state of the sprite.
         ``x`` (int): The x-coordinate of the sprite.
         ``y`` (int): The y-coordinate of the sprite.
         ``ground_y`` (int): The y-coordinate of the ground.
-        ``useMask`` (bool, optional): Whether to create a collision mask for the sprite.
-        Defaults to False.
+        ``useMask`` (bool, optional): Whether to create a collision mask for the sprite. Defaults to False.
         ``jump_speed`` (float): The vertical speed of the jump.
         ``gravity`` (float): Downward acceleration on the jump.
     """

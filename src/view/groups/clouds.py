@@ -7,7 +7,9 @@ import model.assets
 
 class Clouds(pygame.sprite.Group):
     """
-    Spawns clouds as SpriteScrolling objects
+    Clouds
+    ======
+    *Spawns clouds as ``SpriteScrolling`` objects.*
     """
     def __init__(self, speed_multiplier, spawn_chance, min_y, max_y):
         super().__init__()

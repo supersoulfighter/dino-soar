@@ -4,8 +4,10 @@ import model.assets
 import model.game
 
 
-class ScoreView(pygame.sprite.Sprite):
+class Score(pygame.sprite.Sprite):
     """
+    Score
+    =====
     *A sprite that displays the current score.*
 
     Parameters

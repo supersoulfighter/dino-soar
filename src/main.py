@@ -44,8 +44,8 @@ ground = Ground(GAME_GROUND_Y, model.assets.assets["images/ground"])
 clouds = Clouds(CLOUD_SPEED_MULTIPLIER, CLOUD_SPAWN_CHANCE, CLOUD_MIN_Y, CLOUD_MAX_Y)
 obstacles = Obstacles(dino)
 font = pygame.font.Font(model.assets.assets["fonts/PressStart2P/regular"], FONT_SIZE)
-score_view = ScoreView(SCORE_X, SCORE_Y, COLOR_FOREGROUND, font)
-message_view = MessageView(MESSAGE_X, MESSAGE_Y, MESSAGE_LINE_SPACING, COLOR_FOREGROUND, font)
+score_view = Score(SCORE_X, SCORE_Y, COLOR_FOREGROUND, font)
+message_view = Message(MESSAGE_X, MESSAGE_Y, MESSAGE_LINE_SPACING, COLOR_FOREGROUND, font)
 
 # Add sprites to screen with layers
 screen.add(ground, layer=SCREEN_LAYERS.GROUND.value)

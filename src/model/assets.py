@@ -1,17 +1,17 @@
 """
 Asset loader
 ============
-
 *This module makes working with assets (images, sounds, fonts) easier.*
 
-The ``load_assets()`` function takes a root asset directory and recursively
-loads assets in subfolders. Images are converted to ``pygame.Surfaces``. Sounds
-to ``pygame.Sounds``. Fonts are left as Path references, because a ``pygame.Font``
-must be created for each font size, so this module won't know what
-sizes are needed ahead of time. If multiple assets are found in a folder, they are
-converted to a tuple, which makes it easier to have a set of animation frames, for example.
-All assets are loaded into a single dictionary, which is accessible via the ``assets``
-global variable. The keys are the paths to the assets, e.g., "images/dino/run".
+The ``load_assets()`` function takes a root asset directory and recursively loads assets in subfolders.
+
+- Images are converted to ``pygame.Surfaces``.
+- Sounds to ``pygame.Sounds``.
+- Fonts are left as ``Path`` references, because a ``pygame.Font`` must be created for each font size, so this module won't know what sizes are needed ahead of time.
+
+If multiple assets are found in a folder, they are converted to a tuple. This makes it easier to have a set of animation frames, for example.
+
+All assets are loaded into a single dictionary, the ``assets`` global variable. The keys are the paths to the assets, e.g., "images/player/jump".
 """
 import pygame
 from typing import Tuple
@@ -21,9 +21,24 @@ from pathlib import Path
 assets = {}
 
 
-def load_assets(asset_dir):
-    a = Path(asset_dir).rglob("*")
-    for directory in a:
+def load_assets(assets_relative_path: str):
+    """
+    load_assets
+    ===========
+
+    *Load assets into the ``assets`` global variable.*
+
+    Parameters
+    ----------
+        ``assets_relative_path``: This should be the root directory of all assets, relative to the project folder. For example, "./assets".
+    """
+    # This little hack is needed for PyCharm as it treats the root directory as the current directory.
+    a = Path(assets_relative_path)
+    if not a.exists():
+        asset_relative_path = "../" + a.stem
+        a = Path(assets_relative_path)
+
+    for directory in a.rglob("*"):
         if not directory.is_dir():
             continue
             
@@ -42,7 +57,7 @@ def load_assets(asset_dir):
         fonts = [f for f in files if f.suffix.lower() in ['.ttf', '.otf']]
         
         # Create relative path key
-        rel_path = str(directory.relative_to(asset_dir))
+        rel_path = str(directory.relative_to(assets_relative_path))
         
         # Load images
         if images:
