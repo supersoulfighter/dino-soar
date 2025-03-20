@@ -9,7 +9,7 @@ Dino Soar is a partial clone of Chrome's famous no-network dinosaur game where p
 ## Features
 
 - MVC (Model-View-Controller) architecture
-- Smooth animations with sprite-based graphics
+- Frame-based animations and sprite-based graphics
 - Progressive difficulty scaling
 - Sound effects
 - Keyboard controls for jump and duck actions
@@ -45,7 +45,6 @@ python src/main.py
 
 - **Space/Up Arrow**: Jump
 - **Down Arrow**: Duck
-- **ESC**: Quit game
 
 ## Project Structure
 
