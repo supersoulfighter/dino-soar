@@ -1,10 +1,16 @@
 import pygame
 from enum import Enum, auto
+from model.config import *
+import model.assets
+
+
 
 class ALIGNMENT_HORIZONTAL(Enum):
     LEFT = auto()
     RIGHT = auto()
     CENTER = auto()
+
+
 
 class Message(pygame.sprite.Sprite):
     """
@@ -16,20 +22,11 @@ class Message(pygame.sprite.Sprite):
 
     Parameters
     ----------
-        ``x`` (int): The x-coordinate of the message.
-        ``y`` (int): The y-coordinate of the message.
-        ``lineSpacing`` (int): Spacing between lines of text.
-        ``color`` (tuple): The color of the message.
-        ``font`` (pygame.Font, optional): The font to use for the message.Defaults to None.
         ``alignment`` (ALIGNMENT_HORIZONTAL, optional): The horizontal alignment of the message lines, relative to ``x``. Defaults to ALIGNMENT_HORIZONTAL.CENTER.
     """
-    def __init__(self, x, y, lineSpacing, color, font=None, alignment=ALIGNMENT_HORIZONTAL.CENTER):
+    def __init__(self, alignment=ALIGNMENT_HORIZONTAL.CENTER):
         super().__init__()
-        self.x = x
-        self.y = y
-        self.lineSpacing = lineSpacing
-        self.color = color
-        self.font = font
+        self.font = pygame.font.Font(model.assets.assets["fonts/PressStart2P/regular"], FONT_SIZE)
         self._message = None
         self.message = ""
         self.alignment = alignment
@@ -53,20 +50,20 @@ class Message(pygame.sprite.Sprite):
         lines = value.split('\n')
         images = []
         for line in lines:
-            image = self.font.render(line, False, self.color)
+            image = self.font.render(line, False, COLOR_FOREGROUND)
             images.append(image)
-        height = sum(image.get_height() + self.lineSpacing for image in images) - self.lineSpacing
+        height = sum(image.get_height() + MESSAGE_LINE_SPACING for image in images) - MESSAGE_LINE_SPACING
         width = max(image.get_width() for image in images)
         self.image = pygame.Surface((width, height), pygame.SRCALPHA)
         self.image.fill((0,0,0,0))  # Transparent background
         y = 0
         for image in images:
             self.image.blit(image, (0, y))
-            y += image.get_height() + self.lineSpacing
+            y += image.get_height() + MESSAGE_LINE_SPACING
         match self.alignment:
             case ALIGNMENT_HORIZONTAL.LEFT:
-                self.rect = self.image.get_rect(left=(self.x, self.y))
+                self.rect = self.image.get_rect(left=(MESSAGE_X, MESSAGE_Y))
             case ALIGNMENT_HORIZONTAL.RIGHT:
-                self.rect = self.image.get_rect(right=(self.x, self.y))
+                self.rect = self.image.get_rect(right=(MESSAGE_X, MESSAGE_Y))
             case ALIGNMENT_HORIZONTAL.CENTER:
-                self.rect = self.image.get_rect(center=(self.x, self.y))
+                self.rect = self.image.get_rect(center=(MESSAGE_X, MESSAGE_Y))

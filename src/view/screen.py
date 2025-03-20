@@ -1,7 +1,6 @@
 from typing import override
 import pygame
-
-
+from model.config import *
 
 class Screen(pygame.sprite.LayeredUpdates):
     """
@@ -10,22 +9,15 @@ class Screen(pygame.sprite.LayeredUpdates):
     *This class creates and manages the game window and handles all rendering.*
 
     By subclassing ``pygame.Group`` and adding all game objects (``Sprites`` and ``Groups``), we can update and render all game objects in one place.
-
-    Parameters
-    ----------
-        width: Width of the window
-        height: Height of the window
-        caption: Caption of the window
-        color_bg: Background color
     """
 
-    def __init__(self, width, height, caption, color_bg):
+    def __init__(self):
         super().__init__()
-        self.image = pygame.display.set_mode((width, height))
-        pygame.display.set_caption(caption)
+        self.image = pygame.display.set_mode((GAME_WIDTH, GAME_HEIGHT))
+        pygame.display.set_caption(GAME_NAME)
         self.rect = self.image.get_rect()
         self.groups = []
-        self.color_bg = color_bg
+        self.color_bg = COLOR_BACKGROUND
 
 
     @override

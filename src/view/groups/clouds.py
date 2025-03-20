@@ -11,12 +11,6 @@ class Clouds(pygame.sprite.Group):
     ======
     *Spawns clouds as ``SpriteScrolling`` objects.*
     """
-    def __init__(self, speed_multiplier, spawn_chance, min_y, max_y):
-        super().__init__()
-        self.speed_multiplier = speed_multiplier
-        self.spawn_chance = spawn_chance
-        self.min_y = min_y
-        self.max_y = max_y
     
 
     def update(self, *args, **kwargs):
@@ -24,12 +18,12 @@ class Clouds(pygame.sprite.Group):
     
 
     def spawn(self):
-        if random.random() < self.spawn_chance:
+        if random.random() < CLOUD_SPAWN_CHANCE:
             cloud = SpriteScrolling(
                 images=model.assets.assets['images/cloud'],
                 x=GAME_WIDTH,
-                y=random.randint(self.min_y, self.max_y),
-                speed_multiplier=self.speed_multiplier,
+                y=random.randint(CLOUD_MIN_Y, CLOUD_MAX_Y),
+                speed_multiplier=CLOUD_SPEED_MULTIPLIER,
                 useMask=False
             )
             self.add(cloud)

@@ -2,6 +2,7 @@ from enum import Enum, auto
 from typing import override
 import model.assets
 from view.sprites.animating import SpriteAnimating
+from model.config import *
 
 
 
@@ -19,23 +20,24 @@ class Dino(SpriteAnimating):
     ====
     *A sprite that represents the player in the game.*
 
-    Parameters
-    ----------
-        ``animations`` (dict): A dictionary whose keys are the states and values are a ``Sequence`` of images. Or supply a single ``Surface``.
-        ``animation_speed`` (float): The speed of the animation.
-        ``state_start`` (str): The initial state of the sprite.
-        ``x`` (int): The x-coordinate of the sprite.
-        ``y`` (int): The y-coordinate of the sprite.
-        ``ground_y`` (int): The y-coordinate of the ground.
-        ``useMask`` (bool, optional): Whether to create a collision mask for the sprite. Defaults to False.
-        ``jump_speed`` (float): The vertical speed of the jump.
-        ``gravity`` (float): Downward acceleration on the jump.
     """
-    def __init__(self, animations, animation_speed, state_start, x, y, ground_y, useMask, jump_speed, gravity):
-        super().__init__(images=animations, animation_speed=animation_speed, state_start=state_start, x=x, y=y, useMask=useMask)
-        self.ground_y = ground_y
-        self.jump_speed = jump_speed
-        self.gravity = gravity
+    def __init__(self):
+        super().__init__(
+            images={
+                DinoStates.RUNNING: model.assets.assets["images/dino/run"],
+                DinoStates.JUMPING: model.assets.assets["images/dino/idle"],
+                DinoStates.DUCKING: model.assets.assets["images/dino/duck"],
+                DinoStates.CRASHED: model.assets.assets["images/dino/crash"]
+            },
+            animation_speed=DINO_ANIMATION_SPEED,
+            state_start=DinoStates.RUNNING,
+            x=DINO_START_X,
+            y=DINO_START_Y,
+            useMask=True
+        )
+        self.ground_y = GROUND_Y
+        self.jump_speed = DINO_JUMP_SPEED
+        self.gravity = DINO_GRAVITY
         self.velocity = 0
 
 

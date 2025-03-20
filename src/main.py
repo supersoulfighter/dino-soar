@@ -1,9 +1,29 @@
 """
 Dino Soar
 =========
-*A partial clone of the Chrome no-network, dinosaur runner game.*
+*A partial clone of the `Chrome no-network, dinosaur runner game <chrome://dino/>`_*
+
+https://source.chromium.org/chromium/chromium/src/+/main:components/neterror/resources/dino_game/
+
+The code uses a Model View Controller (MVC) architecture. This module acts as the controller.
+
+Known gameplay differences from the original game:
+- No splash / intro screen
+- No night mode
+- No easter eggs / collectables
+- No high score tracker
+- No restart button
+- No slow mode
+- Score formula slightly different
+- Cacti grouping slightly different
+- Obstacle spawning logic slightly different
+- Jump trajectory for dino slightly different
+- Higher max speed
+- Sounds are recorded, not synthesized?
+- Not implemented for mobile device or other window sizes
 
 Author: Jeff Ettenhofer
+
 """
 
 import pygame
@@ -20,56 +40,48 @@ from view.screen import *
 
 # Setup
 pygame.init()
-screen = Screen(GAME_WIDTH, GAME_HEIGHT, GAME_NAME, COLOR_BACKGROUND)
+view = Screen()
 model.assets.load_assets("./assets")
 
 # Create game objects
-dino = Dino(
-    animations={
-            DinoStates.RUNNING: model.assets.assets["images/dino/run"],
-            DinoStates.JUMPING: model.assets.assets["images/dino/idle"],
-            DinoStates.DUCKING: model.assets.assets["images/dino/duck"],
-            DinoStates.CRASHED: model.assets.assets["images/dino/crash"]
-        },
-    animation_speed=DINO_ANIMATION_SPEED,
-    state_start=DinoStates.RUNNING,
-    x=DINO_START_X,
-    y=DINO_START_Y,
-    ground_y=GAME_GROUND_Y,
-    useMask=True,
-    jump_speed=DINO_JUMP_SPEED,
-    gravity=DINO_GRAVITY
-)
-ground = Ground(GAME_GROUND_Y, model.assets.assets["images/ground"])
-clouds = Clouds(CLOUD_SPEED_MULTIPLIER, CLOUD_SPAWN_CHANCE, CLOUD_MIN_Y, CLOUD_MAX_Y)
+dino = Dino()
+ground = Ground()
+clouds = Clouds()
 obstacles = Obstacles(dino)
-font = pygame.font.Font(model.assets.assets["fonts/PressStart2P/regular"], FONT_SIZE)
-score_view = Score(SCORE_X, SCORE_Y, COLOR_FOREGROUND, font)
-message_view = Message(MESSAGE_X, MESSAGE_Y, MESSAGE_LINE_SPACING, COLOR_FOREGROUND, font)
+score = Score()
+message = Message()
 
 # Add sprites to screen with layers
-screen.add(ground, layer=SCREEN_LAYERS.GROUND.value)
-screen.add(clouds, layer=SCREEN_LAYERS.GROUND.value)
-screen.add(dino, layer=SCREEN_LAYERS.DINO.value)
-screen.add(score_view, layer=SCREEN_LAYERS.UI.value)
-screen.add(message_view, layer=SCREEN_LAYERS.UI.value)
+view.add(ground, layer=SCREEN_LAYERS.GROUND.value)
+view.add(clouds, layer=SCREEN_LAYERS.GROUND.value)
+view.add(dino, layer=SCREEN_LAYERS.DINO.value)
+view.add(score, layer=SCREEN_LAYERS.UI.value)
+view.add(message, layer=SCREEN_LAYERS.UI.value)
 
 
 def reset_game():
-    global dino, obstacles, score_view, message_view
+    global dino, obstacles, score, message
     model.game.game_score = 0
-    message_view.message = ""
+    message.message = ""
     if dino.state_previous == None or dino.state_previous == DinoStates.DUCKING:
         dino.state = DinoStates.RUNNING
     else:
         dino.state = dino.state_previous
-    screen.remove(obstacles)
+    view.remove(obstacles)
     obstacles.empty()
-    screen.add(obstacles, layer=SCREEN_LAYERS.OBSTACLES.value)
+    view.add(obstacles, layer=SCREEN_LAYERS.OBSTACLES.value)
     model.game.game_state = GAME_STATES.PLAYING
 
 
-def handle_events():
+def crashed():
+    model.game.game_state = GAME_STATES.CRASHED
+    model.assets.assets["sounds/dino/crash"].play()
+    message.message = "G A M E  O V E R\nPress R to restart"
+    dino.state = DinoStates.CRASHED
+    dino.update()
+
+
+def update():
     for event in pygame.event.get():
         match event.type:
             case pygame.QUIT:
@@ -94,26 +106,19 @@ def handle_events():
                 crashed()
 
             case GAME_EVENT_TYPES.SPAWNED.value:
-                screen.add(event.object, layer=event.layer)
+                view.add(event.object, layer=event.layer)
 
 
-def crashed():
-    model.game.game_state = GAME_STATES.CRASHED
-    model.assets.assets["sounds/dino/crash"].play()
-    message_view.message = "G A M E  O V E R\nPress R to restart"
-    dino.state = DinoStates.CRASHED
-    dino.update()
-
+# Start game
+reset_game()
 
 
 # Game loop
-reset_game()
-
 while model.game.game_state != GAME_STATES.QUIT:
-   handle_events()
+   update()
    if model.game.game_state == GAME_STATES.PLAYING:
        model.game.update()
-       screen.update()
-   screen.render()
+       view.update()
+   view.render()
 
 pygame.quit()

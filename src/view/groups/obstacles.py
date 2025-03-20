@@ -47,7 +47,7 @@ class Obstacles(pygame.sprite.Group):
                 o = SpriteScrolling(
                     images=model.assets.assets['images/cacti'],
                     x=x,
-                    y=GAME_GROUND_Y,
+                    y=GROUND_Y,
                     speed_multiplier=1.0,
                     useMask=True
                 )

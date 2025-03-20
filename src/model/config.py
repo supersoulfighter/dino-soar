@@ -2,6 +2,8 @@
 Game Configuration
 ==================
 *Constants that configure the game*
+
+Most modules in this project have this module as an import dependency, which is not necessarily good practice. The alternative, furnishing all configuration data at the time of object construction, was judged to be unnecessary overhead for a young coder. The resulting code looks a little less imposing and requires less typing.
 """
 from enum import Enum, auto
 import pygame
@@ -16,7 +18,8 @@ GAME_NAME = "Dino Soar"
 GAME_SPEED_INCREMENT = .001
 GAME_SPEED_MAX = 1000
 GAME_SPEED_START = 6
-GAME_GROUND_Y = GAME_HEIGHT - 15
+
+GROUND_Y = GAME_HEIGHT - 15
 
 CACTI_CLUSTER_MAX = 4
 CACTI_WIDTH_MAX = 75
@@ -45,7 +48,7 @@ DINO_ANIMATION_SPEED = 0.25
 DINO_GRAVITY = .7
 DINO_JUMP_SPEED = -10.5
 DINO_START_X = 0
-DINO_START_Y = GAME_GROUND_Y
+DINO_START_Y = GROUND_Y
 
 FONT_SIZE = 13
 

@@ -10,6 +10,7 @@ Make sure to use import ``model.game`` so that the specific global variables in 
 * ``game_state``: The current game state
 * ``game_clock``: The game clock
 """
+import pygame
 from enum import auto
 from model.config import *
 

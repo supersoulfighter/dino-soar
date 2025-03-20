@@ -1,5 +1,6 @@
 import pygame
 import model.game
+from model.config import *
 
 class Ground(pygame.sprite.Group):
     """
@@ -7,15 +8,15 @@ class Ground(pygame.sprite.Group):
     ======
     *The scrolling ground that the player runs on.*
     """
-    def __init__(self, y, image):
+    def __init__(self):
         super().__init__()
         self.A = pygame.sprite.Sprite(self)
         self.B = pygame.sprite.Sprite(self)
         self.add([self.A, self.B])
-        self.A.image = self.B.image = image
-        self.A.rect = image.get_rect()
-        self.B.rect = image.get_rect()
-        self.A.rect.bottom = self.B.rect.bottom = y
+        self.A.image = self.B.image = model.assets.assets['images/ground']
+        self.A.rect = self.A.image.get_rect()
+        self.B.rect = self.B.image.get_rect()
+        self.A.rect.bottom = self.B.rect.bottom = GROUND_Y
         self.A.rect.x = 0
         self.B.rect.x = self.A.rect.width
 
