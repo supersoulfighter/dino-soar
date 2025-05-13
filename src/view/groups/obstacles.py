@@ -49,7 +49,7 @@ class Obstacles(pygame.sprite.Group):
                     x=x,
                     y=GROUND_Y,
                     speed_multiplier=1.0,
-                    useMask=True
+                    use_mask=True
                 )
                 w += o.rect.width + spacing
                 if w > CACTI_WIDTH_MAX:
@@ -57,8 +57,8 @@ class Obstacles(pygame.sprite.Group):
                 self.add(o)
                 pygame.event.post(
                     pygame.event.Event(GAME_EVENT_TYPES.SPAWNED.value,
-                    object=o,
-                    layer=SCREEN_LAYERS.OBSTACLES.value)
+                                       object=o,
+                                       layer=SCREEN_LAYERS.OBSTACLES.value)
                 )
                 x = o.rect.right + spacing
 
@@ -71,8 +71,8 @@ class Obstacles(pygame.sprite.Group):
             self.add(o)
             pygame.event.post(
                 pygame.event.Event(GAME_EVENT_TYPES.SPAWNED.value,
-                object=o,
-                layer=SCREEN_LAYERS.OBSTACLES.value)
+                                   object=o,
+                                   layer=SCREEN_LAYERS.OBSTACLES.value)
             )
 
 

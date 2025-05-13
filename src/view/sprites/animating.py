@@ -21,14 +21,14 @@ class SpriteAnimating(SpriteBase):
         ``useMask`` (bool, optional): Whether to create a collision mask for the sprite. Defaults to False.
         ``*groups`` (pygame.sprite.Group, optional): The groups to add the sprite to.
     """
-    def __init__(self, images, animation_speed, state_start, x, y, useMask=False, *groups, **kwargs):
-        self.useMask = useMask
+    def __init__(self, images, animation_speed, state_start, x, y, use_mask=False, *groups, **kwargs):
+        self.use_mask = use_mask
         self.animations = images
         self.animation_speed = animation_speed
         self._state = None
         self.state = state_start
         self.animate()
-        super().__init__(images=images, x=x, y=y, useMask=useMask, *groups, **kwargs)
+        super().__init__(images=images, x=x, y=y, use_mask=use_mask, *groups, **kwargs)
 
 
 

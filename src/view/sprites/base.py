@@ -20,9 +20,9 @@ class SpriteBase(pygame.sprite.Sprite):
         ``useMask`` (bool, optional): Whether to create a collision mask for the sprite. Defaults to False.
         ``*groups`` (pygame.sprite.Group, optional): The ``Groups`` to add the sprite to.
     """
-    def __init__(self, images, x, y, useMask=False, *groups, **kwargs):
+    def __init__(self, images, x, y, use_mask=False, *groups, **kwargs):
         super().__init__(*groups)
-        self.useMask = useMask
+        self.use_mask = use_mask
         if isinstance(images, Sequence):
             self.image = random.choice(images)
         elif isinstance(images, pygame.Surface):
@@ -39,6 +39,6 @@ class SpriteBase(pygame.sprite.Sprite):
     @image.setter
     def image(self, value):
         self._image = value
-        if self.useMask:
+        if self.use_mask:
             self.mask = pygame.mask.from_surface(self.image)
         # All images should have the same size, so rect not updated

@@ -1,4 +1,3 @@
-from enum import Enum, auto
 from typing import override
 import model.assets
 from view.sprites.animating import SpriteAnimating
@@ -33,7 +32,7 @@ class Dino(SpriteAnimating):
             state_start=DinoStates.RUNNING,
             x=DINO_START_X,
             y=DINO_START_Y,
-            useMask=True
+            use_mask=True
         )
         self.ground_y = GROUND_Y
         self.jump_speed = DINO_JUMP_SPEED

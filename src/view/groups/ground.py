@@ -1,5 +1,6 @@
 import pygame
 import model.game
+import model.assets
 from model.config import *
 
 class Ground(pygame.sprite.Group):

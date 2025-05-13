@@ -26,7 +26,7 @@ class Pterodactyl(SpriteAnimating, SpriteScrolling):
             x=x,
             y=y,
             speed_multiplier=PTERODACTYL_SPEED_MULTIPLIER,
-            useMask=True
+            use_mask=True
         )
 
     @override

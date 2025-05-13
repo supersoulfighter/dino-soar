@@ -3,7 +3,7 @@ Game
 ====
 *Stores the game state:*
 
-Make sure to use import ``model.game`` so that the specific global variables in this module are used, not copies.
+Make sure to use ``import model.game`` so that the specific global variables in this module are used, not copies.
 
 * ``game_score``: The current score
 * ``game_speed``: The current game speed
@@ -11,7 +11,6 @@ Make sure to use import ``model.game`` so that the specific global variables in 
 * ``game_clock``: The game clock
 """
 import pygame
-from enum import auto
 from model.config import *
 
 game_score = 0

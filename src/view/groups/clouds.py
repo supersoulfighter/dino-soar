@@ -24,11 +24,11 @@ class Clouds(pygame.sprite.Group):
                 x=GAME_WIDTH,
                 y=random.randint(CLOUD_MIN_Y, CLOUD_MAX_Y),
                 speed_multiplier=CLOUD_SPEED_MULTIPLIER,
-                useMask=False
+                use_mask=False
             )
             self.add(cloud)
             pygame.event.post(
                 pygame.event.Event(GAME_EVENT_TYPES.SPAWNED.value,
-                object=cloud,
-                layer=SCREEN_LAYERS.GROUND.value)
+                                   object=cloud,
+                                   layer=SCREEN_LAYERS.GROUND.value)
             )

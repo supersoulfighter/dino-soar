@@ -1,17 +1,36 @@
 """
 Asset loader
 ============
-*This module makes working with assets (images, sounds, fonts) easier.*
-
-The ``load_assets()`` function takes a root asset directory and recursively loads assets in subfolders.
+*This module makes working with assets (images, sounds, fonts) easier by preloading and accessing each asset with a string path.*
 
 - Images are converted to ``pygame.Surfaces``.
 - Sounds to ``pygame.Sounds``.
-- Fonts are left as ``Path`` references, because a ``pygame.Font`` must be created for each font size, so this module won't know what sizes are needed ahead of time.
+- Fonts are left as ``Path`` references (see Fonts below).
+- If multiple assets are found in a folder, they are added to a tuple (see Images below).
+- It is recommended that you use a top-level folder for each asset type: "images", "sounds", "fonts".
 
-If multiple assets are found in a folder, they are converted to a tuple. This makes it easier to have a set of animation frames, for example.
+Initialization
+--------------
+The ``load_assets()`` function takes a root asset directory and loads all assets, recursively looking in subfolders. Call this function before you access any assets.
 
-All assets are loaded into a single dictionary, the ``assets`` global variable. The keys are the paths to the assets, e.g., "images/player/jump".
+If you do a standard import of this module: ``import assets``, the assets variable will be global, meaning assets are loaded once and shared between all files. Other importing methods, like ``from assets import *``, could be used to load separate asset collections. Presumably, each would be created by supplying different root directories to ``load_assets()``.
+
+Usage
+-----
+All assets are loaded into a single dictionary, the ``assets`` variable. The keys are the paths to the assets, e.g., "images/player/jump". So in any file, import assets, then access an asset with ``assets["images/player/jump"]``.
+
+Images
+------
+To access a single image (Surface), for example: ``self.image = assets["images/player/idle"]``. If multiple images are found in a folder, they are added to a tuple. This makes it easier to have a set of animation frames. So to set a Sprite's image to the fifth (file) animation frame, use ``self.image = assets["images/player/run"][4]``.
+
+Sounds
+------
+Example way to play a Sound: ``assets["sounds/bleep"].play()``
+
+Fonts
+-----
+A ``pygame.Font`` must be created for each font size, so this module won't know what sizes are needed ahead of time. Therefore, Fonts are not actually loaded until you use code like this example:
+``pygame.font.Font(assets["fonts/SomeFont/regular"], SOME_FONT_SIZE)``
 """
 import pygame
 from typing import Tuple
@@ -52,9 +71,33 @@ def load_assets(assets_relative_path: str):
             continue
         
         # Group files by type
-        images = [f for f in files if f.suffix.lower() in ['.png', '.jpg', '.jpeg', '.gif', '.bmp']]
-        sounds = [f for f in files if f.suffix.lower() in ['.wav', '.mp3', '.ogg']]
-        fonts = [f for f in files if f.suffix.lower() in ['.ttf', '.otf']]
+        images = [f for f in files if f.suffix.lower() in [
+            '.bmp',
+            '.gif',
+            '.jpg',
+            '.jpeg',
+            '.lbm',
+            '.pcx',
+            '.pbm',
+            '.pgm',
+            '.png',
+            '.pnm',
+            '.ppm',
+            '.svg',
+            '.tga',
+            '.tiff',
+            '.webp',
+            '.xpm',
+        ]]
+        sounds = [f for f in files if f.suffix.lower() in [
+            '.wav',
+            '.mp3',
+            '.ogg'
+        ]]
+        fonts = [f for f in files if f.suffix.lower() in [
+            '.ttf',
+            '.otf'
+        ]]
         
         # Create relative path key
         rel_path = str(directory.relative_to(assets_relative_path))

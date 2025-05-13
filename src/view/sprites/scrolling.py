@@ -17,8 +17,8 @@ class SpriteScrolling(SpriteBase):
         ``speed_multiplier`` (float, optional): The speed multiplier for scrolling. Defaults to 1.0.
         ``useMask`` (bool, optional): Whether to create a collision mask for the sprite. Defaults to False.
     """
-    def __init__(self, images, x, y, speed_multiplier=1.0, useMask=False, *groups):
-        super().__init__(images=images, x=x, y=y, useMask=useMask, *groups)
+    def __init__(self, images, x, y, speed_multiplier=1.0, use_mask=False, *groups):
+        super().__init__(images=images, x=x, y=y, use_mask=use_mask, *groups)
         self.speed_multiplier = speed_multiplier
 
 
